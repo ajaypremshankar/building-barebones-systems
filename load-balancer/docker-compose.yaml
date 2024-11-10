@@ -1,0 +1,38 @@
+services:
+  app1:
+    build: ./app1
+    ports:
+      - "5001:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 1s
+      timeout: 2s
+      retries: 10
+    networks:
+      - my_network
+
+  app2:
+    build: ./app2
+    ports:
+      - "5002:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 1s
+      timeout: 2s
+      retries: 10
+    networks:
+      - my_network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      app1:
+        condition: service_healthy
+      app2:
+        condition: service_healthy
+    networks:
+      - my_network
+networks:
+  my_network:
