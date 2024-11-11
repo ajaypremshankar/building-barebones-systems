@@ -1,35 +1,40 @@
 services:
-  us_edge:
+  us-edge:
     build: 
       context: ./edge-servers/server
     ports:
       - "6010:6010"
+    image: edge-servers/us-edge
 
 
-  india_edge:
+  india-edge:
     build: 
       context: ./edge-servers/server
     ports:
       - "6020:6010"
+    image: edge-servers/india-edge
 
 
-  load_balancer:
+  load-balancer:
     build: 
       context: ./edge-servers/load-balancer
     ports:
       - "6001:6001"
+    image: edge-servers/load-balancer
     depends_on:
-      - us_edge
-      - india_edge
+      - us-edge
+      - india-edge
   
-  kitty_server:
+  kitty-server:
     build: 
       context: ./origin-servers/kitty-server
+    image: origin-servers/kitty-server
     ports:
       - "5001:5001"
 
-  puppy_server:
+  puppy-server:
     build: 
       context: ./origin-servers/puppy-server
+    image: origin-servers/puppy-server
     ports:
       - "5002:5002"
