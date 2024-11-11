@@ -5,6 +5,11 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY content/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
+chown -R nginx:nginx /etc/nginx/nginx.conf
+chown -R nginx:nginx /usr/share/nginx/html
 
-EXPOSE 80
+RUN  chmod -R 755 /etc/nginx/nginx.conf
+RUN  chmod -R 755 usr/share/nginx/html
+
+EXPOSE 5000
 ENTRYPOINT ["nginx","-g","daemon off;"]
