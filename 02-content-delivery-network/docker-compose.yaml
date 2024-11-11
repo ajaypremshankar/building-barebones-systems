@@ -1,0 +1,35 @@
+services:
+  us_edge:
+    build: 
+      context: ./edge-servers/server
+    ports:
+      - "6010:6010"
+
+
+  india_edge:
+    build: 
+      context: ./edge-servers/server
+    ports:
+      - "6020:6010"
+
+
+  load_balancer:
+    build: 
+      context: ./edge-servers/load-balancer
+    ports:
+      - "6001:6001"
+    depends_on:
+      - us_edge
+      - india_edge
+  
+  kitty_server:
+    build: 
+      context: ./origin-servers/kitty-server
+    ports:
+      - "5001:5001"
+
+  puppy_server:
+    build: 
+      context: ./origin-servers/puppy-server
+    ports:
+      - "5002:5002"
