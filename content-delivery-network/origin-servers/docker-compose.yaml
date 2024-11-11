@@ -1,0 +1,12 @@
+services:
+  kitty_server:
+    build: 
+      context: ./kitty-server
+    ports:
+      - "8081:8080"
+
+  puppy_server:
+    build: 
+      context: ./puppy-server
+    ports:
+      - "8082:8080"
